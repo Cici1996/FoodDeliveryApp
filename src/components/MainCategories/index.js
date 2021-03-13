@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList,StyleSheet, Text, View } from 'react-native'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { FONTS, SIZES } from '../../../constants'
 import RenderItem from './renderItem'
 
@@ -9,7 +9,7 @@ export default function MainCategories({ data }) {
     const [selectedCategory, setselectedCategory] = useState(null);
 
     function onSelecCategory(item) {
-        setselectedCategory(item);   
+        setselectedCategory(item);
     }
 
     return (

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     tabNavigator : {
         backgroundColor:COLORS.transtparent,
         borderTopWidth:0,
-        elevation:0
+        elevation:0,
     }
 })
 

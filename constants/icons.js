@@ -5,6 +5,7 @@ export const user = require("../assets/icons/avatar.png");
 export const nearby = require("../assets/icons/nearby.png");
 export const bag = require("../assets/icons/bag.png");
 export const rice_bowl = require("../assets/icons/rice.png");
+export const star = require("../assets/icons/star.png");
 
 export default {
     cutlery,
@@ -13,5 +14,6 @@ export default {
     user,
     nearby,
     bag,
-    rice_bowl
+    rice_bowl,
+    star
 }
