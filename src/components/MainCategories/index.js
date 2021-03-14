@@ -5,11 +5,12 @@ import RenderItem from './renderItem'
 
 
 
-export default function MainCategories({ data }) {
+export default function MainCategories({ data,parentCallback }) {
     const [selectedCategory, setselectedCategory] = useState(null);
 
     function onSelecCategory(item) {
         setselectedCategory(item);
+        parentCallback(item)
     }
 
     return (

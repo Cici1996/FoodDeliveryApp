@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { COLORS, FONTS, icons, SIZES } from '../../../constants'
 import { categoryData } from '../../Dummy'
 
-export default function RenderItem({ item }) {
+export default function RenderItem({ item,onPress }) {
 
     const [categories, setcategories] = useState(categoryData);
 
@@ -17,7 +17,7 @@ export default function RenderItem({ item }) {
     }
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <View style={{ marginBottom: SIZES.padding * 2 }}>
                 <Image source={item.photo} resizeMode="cover" style={styles.image} />
                 <View style={styles.info}>

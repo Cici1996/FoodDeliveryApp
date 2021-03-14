@@ -5,16 +5,22 @@ import { HeaderComponent, RestauranList } from '../components'
 import MainCategories from '../components/MainCategories'
 import { categoryData, initialCurrentLocation, restaurantData } from '../Dummy'
 
-export default function Home() {
+export default function Home({navigation}) {
     const [currentLocation, setcurrentLocation] = useState(initialCurrentLocation)
     const [categories, setcategories] = useState(categoryData)
-    const [restaurant, setrestaurant] = useState(restaurantData)
+    const [restaurant, setrestaurant] = useState(restaurantData);
+
+    const callback = (data) => {
+        let restaurantList = restaurantData.filter(a => a.categories.includes(data?.id));
+        setrestaurant(restaurantList);
+    }
+
 
     return (
         <SafeAreaView style={styles.cotainer}>
             <HeaderComponent currentLocation={currentLocation.streetName} />
-            <MainCategories data={categories} />
-            <RestauranList data={restaurant}/>
+            <MainCategories data={categories} parentCallback={callback} />
+            <RestauranList data={restaurant} navigation={navigation}/>
         </SafeAreaView>
     )
 }

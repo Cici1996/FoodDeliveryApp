@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image,StyleSheet } from 'react-native';
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
-import { Home } from '../screens'
+import { CommingSoon, Home } from '../screens'
 import { COLORS, icons } from '../../constants';
 import {TabBarCostumButton} from '../components';
 
@@ -43,7 +43,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="Search"
-                component={Home}
+                component={CommingSoon}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image source={icons.search}
@@ -62,7 +62,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="Love"
-                component={Home}
+                component={CommingSoon}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image source={icons.love}
@@ -81,7 +81,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="User"
-                component={Home}
+                component={CommingSoon}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image source={icons.user}
