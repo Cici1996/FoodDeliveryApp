@@ -23,8 +23,9 @@ export default function FoodInfo({ data,currentItemInChart }) {
                     total: price
                 }
                 orderList.push(newItem)
-                item.push(newItem)
+                //item.push(newItem)
             }
+
             setorderItems(orderList)
         } else if (action === "-") {
             if (item.length > 0 && item[0].qty >= 1) {
@@ -36,7 +37,7 @@ export default function FoodInfo({ data,currentItemInChart }) {
             setorderItems(orderList)
         }
         
-        currentItemInChart(item)
+        currentItemInChart(orderList)
     }
 
     const getOrderQty = (menuId) => {

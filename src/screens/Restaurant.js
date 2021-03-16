@@ -10,28 +10,32 @@ export default function Restaurant({ route, navigation }) {
     const [currentLocation, setcurrentLocation] = useState(null);
     const [currentItemInChart, setcurrentItemInChart] = useState([])
     const [currentItemNumber, setcurrentItemNumber] = useState(0)
+    const [totalOrder, settotalOrder] = useState(0)
 
     useEffect(() => {
         let { item, currentLocation } = route.params;
         setrestaurant(item);
-        setcurrentLocation(currentLocation)
-    }, [])
+        setcurrentLocation(currentLocation);
+        getBasketItemCount();
+    }, [currentItemInChart])
 
     const callbackCurrentItem = (item) => {
         setcurrentItemInChart(item);
-        getBasketItemCount();
     }
 
     const getBasketItemCount = () => {
         let itemCount = currentItemInChart.reduce((a, b) => a + (b.qty || 0), 0);
         setcurrentItemNumber(itemCount);
+
+        let total = currentItemInChart.reduce((a, b) => a + (b.total || 0), 0);
+        settotalOrder(total.toFixed(2));
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <HeaderBackButton restaurant={restaurant} onPressBack={() => { navigation.goBack() }} />
             <FoodInfo data={restaurant} currentItemInChart={callbackCurrentItem} />
-            <OrderButton currentItem={currentItemNumber}/>
+            <OrderButton currentItem={currentItemNumber} totalOrder={totalOrder} onPress={() => navigation.navigate("OrderDelivery")} />
         </SafeAreaView>
     )
 }
