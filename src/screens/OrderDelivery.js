@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {COLORS, FONTS, GOOGLE_API_KEY, icons} from '../../constants';
-import MapViewDirections from 'react-native-maps-directions';
+import React, { useEffect, useState,useRef } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
+import { COLORS, FONTS, GOOGLE_API_KEY, icons } from '../../constants';
+import MapboxGL, { Logger } from "@react-native-mapbox-gl/maps";
 
-export default function OrderDelivery({route, navigation}) {
+MapboxGL.setAccessToken(GOOGLE_API_KEY);
+
+export default function OrderDelivery({ route, navigation }) {
   const [restaurant, setrestaurant] = useState(null);
   const [streetName, setstreetName] = useState('');
   const [fromLocation, setfromLocation] = useState(null);
   const [toLocation, settoLocation] = useState(null);
   const [region, setregion] = useState(null);
+  const timelineLoaded = useRef(false);
 
   useEffect(() => {
-    let {restaurant, currentLocation} = route.params;
+    let { restaurant, currentLocation } = route.params;
 
     let fromLoc = currentLocation.gps;
     let toLoc = restaurant.location;
     let street = currentLocation.streetName;
-
     let mapRegion = {
       latitude: (fromLoc.latitude + toLoc.latitude) / 2,
       longitude: (fromLoc.longitude + toLoc.longitude) / 2,
@@ -29,52 +30,26 @@ export default function OrderDelivery({route, navigation}) {
     setstreetName(street);
     setfromLocation(fromLoc);
     settoLocation(toLoc);
-    setregion(mapRegion);
-  }, [toLocation]);
+    
+    if (!timelineLoaded.current){
+      setregion(mapRegion);
+      timelineLoaded.current = true;
+    }
+
+  }, []);
 
   function renderMap() {
-    const destinationMarker = () => {
-      console.log(toLocation)
+    if(region != null){
       return (
-        <Marker coordinate={toLocation}>
-          <View style={styles.marker}>
-            <View style={styles.markerBorder}>
-              <Image style={styles.pin} source={icons.pin} />
-            </View>
-          </View>
-        </Marker>
+        <View style={{ flex: 1 }}>
+          <MapboxGL.MapView style={{ flex: 1 }}>
+          </MapboxGL.MapView>
+        </View>
       );
-    };
-
-    const carIcon = () => {
-      return (
-        <Marker coordinate={fromLocation} anchor={{x: 0.5, y: 0.5}} flat={true}>
-          <Image style={{...FONTS.icon}} source={icons.car} />
-        </Marker>
-      );
-    };
-
-    return (
-      <View style={{flex: 1}}>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          initialRegion={region}
-          style={{flex: 1}}>
-          {/* <MapViewDirections
-          origin={fromLocation}
-          destination={toLocation}
-          apikey={GOOGLE_API_KEY}
-          strokeWidth={5}
-          strokeColor={COLORS.primary}
-          optimizeWaypoints={true} /> */}
-          {destinationMarker()}
-          {carIcon()}
-        </MapView>
-      </View>
-    );
+    }
   }
 
-  return <View style={{flex: 1}}>{renderMap()}</View>;
+  return <View style={{ flex: 1 }}>{renderMap()}</View>;
 }
 
 const styles = StyleSheet.create({
