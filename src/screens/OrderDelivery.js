@@ -1,7 +1,7 @@
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { COLORS, FONTS, GOOGLE_API_KEY, icons } from '../../constants';
-import MapboxGL, { Logger } from "@react-native-mapbox-gl/maps";
+import MapboxGL, { Logger } from '@react-native-mapbox-gl/maps';
 
 MapboxGL.setAccessToken(GOOGLE_API_KEY);
 
@@ -11,7 +11,6 @@ export default function OrderDelivery({ route, navigation }) {
   const [fromLocation, setfromLocation] = useState(null);
   const [toLocation, settoLocation] = useState(null);
   const [region, setregion] = useState(null);
-  const timelineLoaded = useRef(false);
 
   useEffect(() => {
     let { restaurant, currentLocation } = route.params;
@@ -28,21 +27,38 @@ export default function OrderDelivery({ route, navigation }) {
 
     setrestaurant(restaurant);
     setstreetName(street);
-    setfromLocation(fromLoc);
-    settoLocation(toLoc);
-    
-    if (!timelineLoaded.current){
-      setregion(mapRegion);
-      timelineLoaded.current = true;
-    }
-
+    setfromLocation([fromLoc.longitude, fromLoc.latitude]);
+    settoLocation([toLoc.longitude, toLoc.latitude]);
+    setregion(mapRegion);
   }, []);
 
   function renderMap() {
-    if(region != null){
+    if (region != null) {
+      let houseBounds = [
+        [region.longitude, region.latitude],
+        [region.longitude, region.latitude],
+      ];
       return (
         <View style={{ flex: 1 }}>
           <MapboxGL.MapView style={{ flex: 1 }}>
+            <MapboxGL.Camera
+              bounds={{
+                ne: houseBounds[0],
+                sw: houseBounds[1],
+              }}
+              maxZoomLevel={14} />
+            <MapboxGL.MarkerView coordinate={toLocation}>
+              <View style={styles.marker}>
+                <View style={styles.markerBorder}>
+                  <Image source={icons.pin} style={styles.pin} />
+                </View>
+              </View>
+            </MapboxGL.MarkerView>
+
+            <MapboxGL.MarkerView coordinate={fromLocation}>
+              <Image source={icons.car} style={styles.pin} />
+            </MapboxGL.MarkerView>
+
           </MapboxGL.MapView>
         </View>
       );
@@ -73,5 +89,5 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     tintColor: COLORS.white,
-  },
+  }
 });
