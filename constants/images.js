@@ -1,9 +1,5 @@
 
 const avatar_1 = require("../assets/images/avatar-1.jpg");
-const avatar_2 = require("../assets/images/avatar-2.jpg");
-const avatar_3 = require("../assets/images/avatar-3.jpg");
-const avatar_4 = require("../assets/images/avatar-4.jpg");
-const avatar_5 = require("../assets/images/avatar-5.jpg");
 const baked_fries = require("../assets/images/baked-fries.jpg");
 const burger_restaurant_1 = require("../assets/images/burger-restaurant.jpg");
 const burger_restaurant_2 = require("../assets/images/burger-restaurant-2.jpg");
@@ -31,10 +27,6 @@ const tomato_pasta = require("../assets/images/tomato-pasta.jpg");
 
 export default {
     avatar_1,
-    avatar_2,
-    avatar_3,
-    avatar_4,
-    avatar_5,
     baked_fries,
     burger_restaurant_1,
     burger_restaurant_2,
