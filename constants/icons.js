@@ -22,6 +22,7 @@ export const donut = require('../assets/icons/donut.png');
 export const drink = require('../assets/icons/drink.png');
 export const rotcket = require('../assets/icons/rotcket.png');
 export const car = require('../assets/icons/car-top-view.png');
+export const avatarUser = require('../assets/images/avatar-1.jpg');
 
 export default {
   cutlery,
@@ -48,4 +49,5 @@ export default {
   drink,
   rotcket,
   car,
+  avatarUser
 };

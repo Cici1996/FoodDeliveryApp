@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import { COLORS, FONTS, GOOGLE_API_KEY, icons } from '../../constants';
+import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { COLORS, FONTS, GOOGLE_API_KEY, icons, SIZES } from '../../constants';
 import MapboxGL, { Logger } from '@react-native-mapbox-gl/maps';
 
 MapboxGL.setAccessToken(GOOGLE_API_KEY);
@@ -56,7 +56,11 @@ export default function OrderDelivery({ route, navigation }) {
             </MapboxGL.MarkerView>
 
             <MapboxGL.MarkerView coordinate={fromLocation}>
-              <Image source={icons.car} style={styles.pin} />
+              <Image source={icons.car} style={{
+                width: 30,
+                height: 30,
+                tintColor: COLORS.black,
+              }} />
             </MapboxGL.MarkerView>
 
           </MapboxGL.MapView>
@@ -65,7 +69,169 @@ export default function OrderDelivery({ route, navigation }) {
     }
   }
 
-  return <View style={{ flex: 1 }}>{renderMap()}</View>;
+  function renderDestinationHeader() {
+    return (
+      <View style={{
+        height: 50,
+        position: "absolute",
+        top: 50,
+        left: 0,
+        right: 0,
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <View style={{
+          flexDirection: "row",
+          alignItems: "center",
+          width: SIZES.width * 0.9,
+          paddingVertical: SIZES.padding,
+          paddingHorizontal: SIZES.padding * 2,
+          backgroundColor: COLORS.white,
+          borderRadius: SIZES.radius
+        }}>
+          <Image source={icons.pin} style={{
+            width: 30,
+            height: 30,
+            marginRight: SIZES.padding,
+            tintColor: COLORS.primary
+          }} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ ...FONTS.body3 }}>
+              {streetName}
+            </Text>
+          </View>
+          <Text style={{ ...FONTS.body3 }}>
+            10 mins
+            </Text>
+        </View>
+      </View>
+    )
+  }
+
+  function renderDeliveryInfo() {
+    return (
+      <View style={{
+        position: "absolute",
+        bottom: 50,
+        left: 0,
+        right: 0,
+        alignItems: "center",
+        justifyContent: "center"
+      }}>
+        <View style={{
+          backgroundColor: COLORS.white,
+          width: SIZES.width * 0.9,
+          paddingVertical: SIZES.padding * 3,
+          paddingHorizontal: SIZES.padding * 2,
+          borderRadius: SIZES.radius
+        }}>
+          <View style={{
+            flexDirection: "row",
+            alignItems: "center"
+          }}>
+            <Image source={icons.avatarUser} style={{
+              width: 50,
+              height: 50,
+              borderRadius: 50 / 2
+            }} />
+            <View style={{
+              flex: 1,
+              marginLeft: SIZES.padding
+            }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <Text style={{ ...FONTS.h4 }}>
+                  {restaurant?.courier?.name}
+                </Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Image source={icons.star}
+                    style={{ width: 18, height: 18, tintColor: COLORS.primary, marginRight: SIZES.padding }} />
+                  <Text style={{ ...FONTS.body3 }}>{restaurant?.rating}</Text>
+                </View>
+              </View>
+              <Text style={{ color: COLORS.darkGray, ...FONTS.body4 }}>
+                {restaurant?.name}
+              </Text>
+            </View>
+          </View>
+          <View style={{
+            flexDirection: "row",
+            marginTop: SIZES.padding * 2,
+            justifyContent: "space-between"
+          }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Home")}
+              style={{
+                backgroundColor: COLORS.primary,
+                flex: 1,
+                height: 50,
+                marginRight: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 10
+              }}>
+              <Text style={{ ...FONTS.h4, color: COLORS.white }}>Call</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              style={{
+                backgroundColor: COLORS.secondary,
+                flex: 1,
+                height: 50,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 10
+              }}>
+              <Text style={{ ...FONTS.h4, color: COLORS.white }}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+
+  function renderButtonZoom() {
+    return (
+      <View style={{
+        position:"absolute",
+        bottom:SIZES.height * 0.35,
+        right:SIZES.padding * 2,
+        width:60,
+        height:130,
+        justifyContent:"space-between"
+      }}>
+        <TouchableOpacity style={{
+          width:60,
+          height:60,
+          borderRadius:60/2,
+          backgroundColor:COLORS.white,
+          alignItems:"center",
+          justifyContent:"center"
+        }}>
+          <Text style={{...FONTS.body1}}>+</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{
+          width:60,
+          height:60,
+          borderRadius:60/2,
+          backgroundColor:COLORS.white,
+          alignItems:"center",
+          justifyContent:"center"
+        }}>
+          <Text style={{...FONTS.body1}}>-</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  return <View style={{ flex: 1 }}>
+    {renderMap()}
+    {renderDestinationHeader()}
+    {renderDeliveryInfo()}
+    {renderButtonZoom()}
+  </View>;
 }
 
 const styles = StyleSheet.create({
