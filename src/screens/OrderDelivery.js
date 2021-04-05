@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { COLORS, FONTS, GOOGLE_API_KEY, icons, SIZES } from '../../constants';
+import { COLORS, FONTS, MAPBOX_API_KEY, icons, SIZES } from '../../constants';
 import MapboxGL, { Logger } from '@react-native-mapbox-gl/maps';
 
-MapboxGL.setAccessToken(GOOGLE_API_KEY);
+MapboxGL.setAccessToken(MAPBOX_API_KEY);
 
 export default function OrderDelivery({ route, navigation }) {
   const [restaurant, setrestaurant] = useState(null);

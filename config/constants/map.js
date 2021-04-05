@@ -1,3 +1,3 @@
-const GOOGLE_API_KEY = "";
+const MAPBOX_API_KEY = "";
 
-export default GOOGLE_API_KEY;
+export default MAPBOX_API_KEY;
